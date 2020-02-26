@@ -3,9 +3,9 @@
 今天在开发中碰到一个很奇怪的问题。一个学生的出生日期是*1988-04-15*，转换成unix时间戳应该是*577036800000*。然而在前端接收到的数据来看，unix时间戳变成了*577033200000*，这与正常时间相差了3600000ms，也就是3600s，即一小时。前端用这个来计算这个学生的出生日期，就变成了1988-04-14 23:00:00。
 抱着疑问，我去数据库查了一查，发现数据库里的数据记载的是正确的，即*1988-04-15*。那是怎么产生这个问题的呢？
 于是开始debug，在从数据库中获取到该生的信息后进行查看，问题如图。
-![问题截图1](https://github.com/lewiscrow/develop-issues/tree/master/images/issue-1-1.png)
+![问题截图1](https://github.com/lewiscrow/develop-issues/blob/master/images/issue-1-1.png)
 可以看到Date存储的cdate保存的时区是有问题的，显示是*+9东九区*，正常的应该是这样的，
-![问题截图2](https://github.com/lewiscrow/develop-issues/tree/master/images/issue-1-2.jpeg)
+![问题截图2](https://github.com/lewiscrow/develop-issues/blob/master/images/issue-1-2.jpeg)
 应该是*+8东八区*。为什么会出现这个情况呢？
 面向谷歌编程告诉我们，这里涉及到了一个叫做夏令时的概念。
 >夏令时，表示为了节约能源，人为规定时间的意思。也叫夏时制，夏时令（Daylight Saving Time：DST），又称“日光节约时制”和“夏令时间”，在这一制度实行期间所采用的统一时间称为“夏令时间”。一般在天亮早的夏季人为将时间调快一小时，可以使人早起早睡，减少照明量，以充分利用光照资源，从而节约照明用电。各个采纳夏时制的国家具体规定不同。目前全世界有近110个国家每年要实行夏令时。
